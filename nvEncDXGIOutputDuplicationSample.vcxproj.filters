@@ -13,11 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\NVEnc">
-      <UniqueIdentifier>{e71adcdf-52aa-4e51-8323-2e0d0d57eb62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\NVEnc">
       <UniqueIdentifier>{d39b399d-bddc-4e08-a63d-7dd40dea6cf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\NVEnc">
+      <UniqueIdentifier>{a8950817-2f86-4ac8-90b5-ec149b91c083}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,25 +38,22 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Defs.h">
+    <ClInclude Include="src\DDAImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DDAImpl.h">
+    <ClInclude Include="src\Defs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Preproc.h">
+    <ClInclude Include="src\Preproc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Samples\Utils\Logger.h">
+    <ClInclude Include="src\third-party\NvCodec\NvEncoder\nvEncodeAPI.h">
       <Filter>Header Files\NVEnc</Filter>
     </ClInclude>
-    <ClInclude Include="..\Samples\NvCodec\NvEncoder\nvEncodeAPI.h">
+    <ClInclude Include="src\third-party\NvCodec\NvEncoder\NvEncoder.h">
       <Filter>Header Files\NVEnc</Filter>
     </ClInclude>
-    <ClInclude Include="..\Samples\NvCodec\NvEncoder\NvEncoder.h">
-      <Filter>Header Files\NVEnc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Samples\NvCodec\NvEncoder\NvEncoderD3D11.h">
+    <ClInclude Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.h">
       <Filter>Header Files\NVEnc</Filter>
     </ClInclude>
   </ItemGroup>

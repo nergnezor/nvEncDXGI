@@ -30,7 +30,7 @@
 #include <dxgi1_2.h>
 #include <d3d11_2.h>
 #include <unordered_map>
-using namespace std;
+//using namespace std;
 
 class RGBToNV12
 {

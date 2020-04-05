@@ -28,6 +28,7 @@
 
 #include "Defs.h"
 #include "Preproc.h"
+using namespace std;
 
 /// Constructor
 RGBToNV12::RGBToNV12(ID3D11Device *pDev, ID3D11DeviceContext *pCtx)

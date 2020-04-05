@@ -29,6 +29,7 @@
 #include "Defs.h"
 #include "DDAImpl.h"
 #include <iomanip>
+using namespace std;
 
 /// Initialize DDA
 HRESULT DDAImpl::Init()

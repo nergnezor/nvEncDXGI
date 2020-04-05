@@ -490,6 +490,6 @@ int main(int argc, char** argv)
 
     const sec duration = clock::now() - before;
 
-    std::cout << "It took " << duration.count() << "s (" << nFrames/duration.count() << " FPS)" << std::endl;
+    printf("It took %d s (%%.1f FPS)", duration.count() ,nFrames / duration.count());
     return ret;
 }
