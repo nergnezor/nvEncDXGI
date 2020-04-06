@@ -19,6 +19,9 @@
     <Filter Include="Header Files\NVEnc">
       <UniqueIdentifier>{a8950817-2f86-4ac8-90b5-ec149b91c083}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\imgui">
+      <UniqueIdentifier>{0ff8844f-4b99-4387-be9d-fbb600cf0876}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DDAImpl.cpp">
@@ -35,6 +38,24 @@
     </ClCompile>
     <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.cpp">
       <Filter>Source Files\NVEnc</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\git\imgui\imgui.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\git\imgui\imgui_demo.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\git\imgui\imgui_draw.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\git\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\git\imgui\examples\imgui_impl_win32.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\git\imgui\examples\imgui_impl_dx11.cpp">
+      <Filter>Source Files\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
