@@ -30,15 +30,14 @@
 #include "Preproc.h"
 #include "NvEncoder/NvEncoderD3D11.h"
 
-
 class DemoApplication
 {
     /// Demo Application Core class
-#define returnIfError(x)\
-    if (FAILED(x))\
-    {\
-        printf(__FUNCTION__": Line %d, File %s Returning error 0x%08x\n", __LINE__, __FILE__, x);\
-        return x;\
+#define returnIfError(x)                                                                           \
+    if (FAILED(x))                                                                                 \
+    {                                                                                              \
+        printf(__FUNCTION__ ": Line %d, File %s Returning error 0x%08x\n", __LINE__, __FILE__, x); \
+        return x;                                                                                  \
     }
 
 private:
@@ -72,9 +71,10 @@ private:
     /// Encoded video bitstream packet in CPU memory
     std::vector<std::vector<uint8_t>> vPacket;
     /// NVENCODEAPI session intialization parameters
-    NV_ENC_INITIALIZE_PARAMS encInitParams = { 0 };
+    NV_ENC_INITIALIZE_PARAMS encInitParams = {0};
     /// NVENCODEAPI video encoding configuration parameters
-    NV_ENC_CONFIG encConfig = { 0 };
+    NV_ENC_CONFIG encConfig = {0};
+
 private:
     /// Initialize DXGI pipeline
     HRESULT InitDXGI()
@@ -82,29 +82,28 @@ private:
         HRESULT hr = S_OK;
         /// Driver types supported
         D3D_DRIVER_TYPE DriverTypes[] =
-        {
-            D3D_DRIVER_TYPE_HARDWARE,
-            D3D_DRIVER_TYPE_WARP,
-            D3D_DRIVER_TYPE_REFERENCE,
-        };
+            {
+                D3D_DRIVER_TYPE_HARDWARE,
+                D3D_DRIVER_TYPE_WARP,
+                D3D_DRIVER_TYPE_REFERENCE,
+            };
         UINT NumDriverTypes = ARRAYSIZE(DriverTypes);
 
         /// Feature levels supported
         D3D_FEATURE_LEVEL FeatureLevels[] =
-        {
-            D3D_FEATURE_LEVEL_11_0,
-            D3D_FEATURE_LEVEL_10_1,
-            D3D_FEATURE_LEVEL_10_0,
-            D3D_FEATURE_LEVEL_9_1
-        };
+            {
+                D3D_FEATURE_LEVEL_11_0,
+                D3D_FEATURE_LEVEL_10_1,
+                D3D_FEATURE_LEVEL_10_0,
+                D3D_FEATURE_LEVEL_9_1};
         UINT NumFeatureLevels = ARRAYSIZE(FeatureLevels);
         D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_0;
 
         /// Create device
         for (UINT DriverTypeIndex = 0; DriverTypeIndex < NumDriverTypes; ++DriverTypeIndex)
         {
-            hr = D3D11CreateDevice(nullptr, DriverTypes[DriverTypeIndex], nullptr, /*D3D11_CREATE_DEVICE_DEBUG*/0, FeatureLevels, NumFeatureLevels,
-                D3D11_SDK_VERSION, &pD3DDev, &FeatureLevel, &pCtx);
+            hr = D3D11CreateDevice(nullptr, DriverTypes[DriverTypeIndex], nullptr, /*D3D11_CREATE_DEVICE_DEBUG*/ 0, FeatureLevels, NumFeatureLevels,
+                                   D3D11_SDK_VERSION, &pD3DDev, &FeatureLevel, &pCtx);
             if (SUCCEEDED(hr))
             {
                 // Device creation succeeded, no need to loop anymore
@@ -132,7 +131,7 @@ private:
     {
         if (!pEnc)
         {
-            DWORD w = bNoVPBlt ? pDDAWrapper->getWidth() : encWidth; 
+            DWORD w = bNoVPBlt ? pDDAWrapper->getWidth() : encWidth;
             DWORD h = bNoVPBlt ? pDDAWrapper->getHeight() : encHeight;
             NV_ENC_BUFFER_FORMAT fmt = bNoVPBlt ? NV_ENC_BUFFER_FORMAT_ARGB : NV_ENC_BUFFER_FORMAT_NV12;
             pEnc = new NvEncoderD3D11(pD3DDev, w, h, fmt);
@@ -180,7 +179,7 @@ private:
     {
         if (!fp)
         {
-            char fname[64] = { 0 };
+            char fname[64] = {0};
             sprintf_s(fname, (const char *)fnameBase, failCount);
             errno_t err = fopen_s(&fp, fname, "wb");
             returnIfError(err);
@@ -210,7 +209,6 @@ public:
 
         hr = InitDup();
         returnIfError(hr);
-
 
         hr = InitEnc();
         returnIfError(hr);
@@ -251,7 +249,7 @@ public:
         SAFE_RELEASE(pDupTex2D);
         returnIfError(hr);
 
-        pEncBuf->AddRef();  // Release after encode
+        pEncBuf->AddRef(); // Release after encode
         return hr;
     }
 
@@ -324,7 +322,7 @@ public:
     DemoApplication() {}
     ~DemoApplication()
     {
-        Cleanup(true); 
+        Cleanup(true);
     }
 };
 
@@ -335,19 +333,19 @@ int Grab60FPS(int nFrames)
     DemoApplication Demo;
     HRESULT hr = S_OK;
     int capturedFrames = 0;
-    LARGE_INTEGER start = { 0 };
-    LARGE_INTEGER end = { 0 };
-    LARGE_INTEGER interval = { 0 };
-    LARGE_INTEGER freq = { 0 };
+    LARGE_INTEGER start = {0};
+    LARGE_INTEGER end = {0};
+    LARGE_INTEGER interval = {0};
+    LARGE_INTEGER freq = {0};
     int wait = WAIT_BASE;
 
     QueryPerformanceFrequency(&freq);
 
     /// Reset waiting time for the next screen capture attempt
-#define RESET_WAIT_TIME(start, end, interval, freq)         \
-    QueryPerformanceCounter(&end);                          \
-    interval.QuadPart = end.QuadPart - start.QuadPart;      \
-    MICROSEC_TIME(interval, freq);                          \
+#define RESET_WAIT_TIME(start, end, interval, freq)    \
+    QueryPerformanceCounter(&end);                     \
+    interval.QuadPart = end.QuadPart - start.QuadPart; \
+    MICROSEC_TIME(interval, freq);                     \
     wait = (int)(WAIT_BASE - (interval.QuadPart * 1000));
 
     /// Initialize Demo app
@@ -361,12 +359,12 @@ int Grab60FPS(int nFrames)
     /// Run capture loop
     do
     {
-        /// get start timestamp. 
+        /// get start timestamp.
         /// use this to adjust the waiting period in each capture attempt to approximately attempt 60 captures in a second
         QueryPerformanceCounter(&start);
         /// Get a frame from DDA
         hr = Demo.Capture(wait);
-        if (hr == DXGI_ERROR_WAIT_TIMEOUT) 
+        if (hr == DXGI_ERROR_WAIT_TIMEOUT)
         {
             /// retry if there was no new update to the screen during our specific timeout interval
             /// reset our waiting time
@@ -394,7 +392,7 @@ int Grab60FPS(int nFrames)
             }
             RESET_WAIT_TIME(start, end, interval, freq);
             /// Preprocess for encoding
-            hr = Demo.Preproc(); 
+            hr = Demo.Preproc();
             if (FAILED(hr))
             {
                 printf("Preproc failed with error 0x%08x\n", hr);
@@ -424,6 +422,7 @@ void printHelp()
     printf(" DXGIOUTPUTDuplication_NVENC_Demo: '-frames <n>': n = No. of frames to capture");
 }
 
+#pragma region WindowsAPI
 #if 0
 #include <windows.h>
 #include <stdlib.h>
@@ -567,17 +566,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 #endif
-#if 0
-int main(int argc, char** argv)
+#pragma endregion
+
+#pragma region Capture
+#if 1
+#include <Gui.h>
+Gui gui;
+int main(int argc, char **argv)
+// void Capture()
 {
+    gui.Init();
     /// The app will try to capture 60 times, by default
     int nFrames = 60;
     int ret = 0;
     bool useNvenc = true;
 
-
-
-    /// Parse arguments
+/// Parse arguments
+#if 0
     try
     {
         if (argc > 1)
@@ -601,8 +606,7 @@ int main(int argc, char** argv)
                          (!strcmpi("-?", argv[i])) ||
                          (!strcmpi("?", argv[i])) ||
                          (!strcmpi("about", argv[i])) ||
-                         (!strcmpi("usage", argv[i]))
-                        )
+                         (!strcmpi("usage", argv[i])))
                 {
                     printHelp();
                 }
@@ -620,8 +624,8 @@ int main(int argc, char** argv)
                                                    Continuing to grab 60 frames.\n");
         printHelp();
     }
+#endif
     printf(" DXGIOUTPUTDuplication_NVENC_Demo: Frames to Capture: %d.\n", nFrames);
-
 
     using clock = std::chrono::system_clock;
     using sec = std::chrono::duration<double>;
@@ -634,252 +638,8 @@ int main(int argc, char** argv)
 
     const sec duration = clock::now() - before;
 
-    printf("It took %.1f s (%.1f FPS)", duration.count() ,nFrames / duration.count());
+    printf("It took %.1f s (%.1f FPS)", duration.count(), nFrames / duration.count());
     return ret;
 }
 #endif
-
-
-
-// dear imgui - standalone example application for DirectX 11
-// If you are new to dear imgui, see examples/README.txt and documentation at the top of imgui.cpp.
-
-#include "imgui.h"
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
-#include <d3d11.h>
-#define DIRECTINPUT_VERSION 0x0800
-#include <dinput.h>
-#include <tchar.h>
-
-// Data
-static ID3D11Device* g_pd3dDevice = NULL;
-static ID3D11DeviceContext* g_pd3dDeviceContext = NULL;
-static IDXGISwapChain* g_pSwapChain = NULL;
-static ID3D11RenderTargetView* g_mainRenderTargetView = NULL;
-
-// Forward declarations of helper functions
-bool CreateDeviceD3D(HWND hWnd);
-void CleanupDeviceD3D();
-void CreateRenderTarget();
-void CleanupRenderTarget();
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-// Main code
-int main(int, char**)
-{
-    // Create application window
-    WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, WndProc, 0L, 0L, GetModuleHandle(NULL), NULL, NULL, NULL, NULL, _T("ImGui Example"), NULL };
-    ::RegisterClassEx(&wc);
-    HWND hwnd = ::CreateWindow(wc.lpszClassName, _T("Dear ImGui DirectX11 Example"), WS_OVERLAPPEDWINDOW, 100, 100, 1280, 800, NULL, NULL, wc.hInstance, NULL);
-
-    // Initialize Direct3D
-    if (!CreateDeviceD3D(hwnd))
-    {
-        CleanupDeviceD3D();
-        ::UnregisterClass(wc.lpszClassName, wc.hInstance);
-        return 1;
-    }
-
-    // Show the window
-    ::ShowWindow(hwnd, SW_SHOWDEFAULT);
-    ::UpdateWindow(hwnd);
-
-    // Setup Dear ImGui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
-    //ImGui::StyleColorsClassic();
-
-    // Setup Platform/Renderer bindings
-    ImGui_ImplWin32_Init(hwnd);
-    ImGui_ImplDX11_Init(g_pd3dDevice, g_pd3dDeviceContext);
-
-    // Load Fonts
-    // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
-    // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
-    // - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-    // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-    // - Read 'docs/FONTS.txt' for more instructions and details.
-    // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-    //io.Fonts->AddFontDefault();
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-    //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-    //IM_ASSERT(font != NULL);
-
-    // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-    // Main loop
-    MSG msg;
-    ZeroMemory(&msg, sizeof(msg));
-    while (msg.message != WM_QUIT)
-    {
-        // Poll and handle messages (inputs, window resize, etc.)
-        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
-        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
-        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-        if (::PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-        {
-            ::TranslateMessage(&msg);
-            ::DispatchMessage(&msg);
-            continue;
-        }
-
-        // Start the Dear ImGui frame
-        ImGui_ImplDX11_NewFrame();
-        ImGui_ImplWin32_NewFrame();
-        ImGui::NewFrame();
-
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
-            ImGui::ShowDemoWindow(&show_demo_window);
-
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            ImGui::End();
-        }
-
-        // 3. Show another simple window.
-        if (show_another_window)
-        {
-            ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                show_another_window = false;
-            ImGui::End();
-        }
-
-        // Rendering
-        ImGui::Render();
-        g_pd3dDeviceContext->OMSetRenderTargets(1, &g_mainRenderTargetView, NULL);
-        g_pd3dDeviceContext->ClearRenderTargetView(g_mainRenderTargetView, (float*)&clear_color);
-        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-        g_pSwapChain->Present(1, 0); // Present with vsync
-        //g_pSwapChain->Present(0, 0); // Present without vsync
-    }
-
-    // Cleanup
-    ImGui_ImplDX11_Shutdown();
-    ImGui_ImplWin32_Shutdown();
-    ImGui::DestroyContext();
-
-    CleanupDeviceD3D();
-    ::DestroyWindow(hwnd);
-    ::UnregisterClass(wc.lpszClassName, wc.hInstance);
-
-    return 0;
-}
-
-// Helper functions
-
-bool CreateDeviceD3D(HWND hWnd)
-{
-    // Setup swap chain
-    DXGI_SWAP_CHAIN_DESC sd;
-    ZeroMemory(&sd, sizeof(sd));
-    sd.BufferCount = 2;
-    sd.BufferDesc.Width = 0;
-    sd.BufferDesc.Height = 0;
-    sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    sd.BufferDesc.RefreshRate.Numerator = 60;
-    sd.BufferDesc.RefreshRate.Denominator = 1;
-    sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
-    sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-    sd.OutputWindow = hWnd;
-    sd.SampleDesc.Count = 1;
-    sd.SampleDesc.Quality = 0;
-    sd.Windowed = TRUE;
-    sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-
-    UINT createDeviceFlags = 0;
-    //createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
-    D3D_FEATURE_LEVEL featureLevel;
-    const D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0, };
-    if (D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, createDeviceFlags, featureLevelArray, 2, D3D11_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice, &featureLevel, &g_pd3dDeviceContext) != S_OK)
-        return false;
-
-    CreateRenderTarget();
-    return true;
-}
-
-void CleanupDeviceD3D()
-{
-    CleanupRenderTarget();
-    if (g_pSwapChain) { g_pSwapChain->Release(); g_pSwapChain = NULL; }
-    if (g_pd3dDeviceContext) { g_pd3dDeviceContext->Release(); g_pd3dDeviceContext = NULL; }
-    if (g_pd3dDevice) { g_pd3dDevice->Release(); g_pd3dDevice = NULL; }
-}
-
-void CreateRenderTarget()
-{
-    ID3D11Texture2D* pBackBuffer;
-    g_pSwapChain->GetBuffer(0, IID_PPV_ARGS(&pBackBuffer));
-    g_pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &g_mainRenderTargetView);
-    pBackBuffer->Release();
-}
-
-void CleanupRenderTarget()
-{
-    if (g_mainRenderTargetView) { g_mainRenderTargetView->Release(); g_mainRenderTargetView = NULL; }
-}
-
-// Forward declare message handler from imgui_impl_win32.cpp
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
-// Win32 message handler
-LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-    if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
-        return true;
-
-    switch (msg)
-    {
-    case WM_SIZE:
-        if (g_pd3dDevice != NULL && wParam != SIZE_MINIMIZED)
-        {
-            CleanupRenderTarget();
-            g_pSwapChain->ResizeBuffers(0, (UINT)LOWORD(lParam), (UINT)HIWORD(lParam), DXGI_FORMAT_UNKNOWN, 0);
-            CreateRenderTarget();
-        }
-        return 0;
-    case WM_SYSCOMMAND:
-        if ((wParam & 0xfff0) == SC_KEYMENU) // Disable ALT application menu
-            return 0;
-        break;
-    case WM_DESTROY:
-        ::PostQuitMessage(0);
-        return 0;
-    }
-    return ::DefWindowProc(hWnd, msg, wParam, lParam);
-}
+#pragma endregion

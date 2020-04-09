@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -22,7 +22,7 @@
     <ProjectGuid>{051C0B02-2DB6-46E1-BF37-7C3578DEDBCE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>nvEncDXGIOutputDuplicationSample</RootNamespace>
-    <ProjectName>nvEncDXGI</ProjectName>
+    <ProjectName>Capture</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -90,7 +90,7 @@
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWS_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -111,7 +111,7 @@
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWS_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -133,7 +133,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWSNDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -156,7 +156,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWSNDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>src/third-party/NvCodec;src/third-party/imgui;src/third-party/imgui/examples</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src/third-party/NvCodec;src/third-party/imgui;src/third-party/imgui/examples</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -170,6 +170,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Capture.cpp" />
+    <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\third-party\imgui\examples\imgui_impl_dx11.cpp" />
     <ClCompile Include="src\third-party\imgui\examples\imgui_impl_win32.cpp" />
     <ClCompile Include="src\third-party\imgui\imgui.cpp" />
@@ -183,6 +185,8 @@
     <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Capture.h" />
+    <ClInclude Include="Gui.h" />
     <ClInclude Include="src\DDAImpl.h" />
     <ClInclude Include="src\Defs.h" />
     <ClInclude Include="src\Preproc.h" />

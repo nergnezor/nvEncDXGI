@@ -15,7 +15,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        config: [Release, Debug]
+        config: [Release]
 
     steps:
       - uses: actions/checkout@v2
@@ -23,9 +23,9 @@ jobs:
       - name: setup-msbuild
         uses: microsoft/setup-msbuild@v1
 
-      - run: MSBuild nvEncDXGI.sln /p:Configuration=${{ matrix.config }} /p:Platform=x64
+      - run: MSBuild nvEnc.sln /p:Configuration=${{ matrix.config }} /p:Platform=x64
 
       - uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.config }}
-          path: x64\${{ matrix.config }}\nvEncDXGI.exe
+          path: x64\${{ matrix.config }}\Capture.exe

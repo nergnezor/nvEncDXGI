@@ -5,22 +5,32 @@
     "tasks": [
         {
             "label": "build",
+            // "command": "cmd",
+            // "type": "process",
+            // "args": [
+            //     "/C %vcvarsall% && msbuild nvEncDXGI.sln /p:Configuration Release",
+            // ],
             "type": "shell",
             "command": "msbuild",
             "args": [
+                "nvEnc.sln",
                 // Ask msbuild to generate full paths for file names.
-                "/property:GenerateFullPaths=true",
-                "/t:build",
-                // Do not generate summary otherwise it leads to duplicate errors in Problems panel
-                "/consoleloggerparameters:NoSummary"
+                // "/property:GenerateFullPaths=true",
+                "/property:Configuration=Debug",
+                "/property:Platform=x64",
+                "/p:OutDir=${workspaceFolder}/debug/",
+                // "/t:build"
             ],
-            "group": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "presentation": {
                 // Reveal the output only if unrecognized errors occur.
                 "reveal": "silent"
             },
             // Use the standard MS compiler pattern to detect errors, warnings and infos
             "problemMatcher": "$msCompile"
-        }
+        },
     ]
 }
