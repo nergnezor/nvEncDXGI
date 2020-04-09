@@ -39,23 +39,23 @@
     <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.cpp">
       <Filter>Source Files\NVEnc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\git\imgui\imgui.cpp">
-      <Filter>Source Files\imgui</Filter>
+    <ClCompile Include="src\third-party\imgui\examples\imgui_impl_dx11.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\git\imgui\imgui_demo.cpp">
-      <Filter>Source Files\imgui</Filter>
+    <ClCompile Include="src\third-party\imgui\examples\imgui_impl_win32.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\git\imgui\imgui_draw.cpp">
-      <Filter>Source Files\imgui</Filter>
+    <ClCompile Include="src\third-party\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\git\imgui\imgui_widgets.cpp">
-      <Filter>Source Files\imgui</Filter>
+    <ClCompile Include="src\third-party\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\git\imgui\examples\imgui_impl_win32.cpp">
-      <Filter>Source Files\imgui</Filter>
+    <ClCompile Include="src\third-party\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\git\imgui\examples\imgui_impl_dx11.cpp">
-      <Filter>Source Files\imgui</Filter>
+    <ClCompile Include="src\third-party\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,5 +77,8 @@
     <ClInclude Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.h">
       <Filter>Header Files\NVEnc</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
