@@ -29,6 +29,7 @@
 #include "DDAImpl.h"
 #include "Preproc.h"
 #include "NvEncoder/NvEncoderD3D11.h"
+// #include "NvDecoder/NvDecoder.h"
 
 class DemoApplication
 {
@@ -571,11 +572,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 #pragma region Capture
 #if 1
 #include <Gui.h>
+#include <shellapi.h>
 Gui gui;
 int main(int argc, char **argv)
 // void Capture()
 {
-    gui.Init();
     /// The app will try to capture 60 times, by default
     int nFrames = 60;
     int ret = 0;
@@ -635,10 +636,13 @@ int main(int argc, char **argv)
 
     /// Kick off the demo
     ret = Grab60FPS(nFrames);
-
+    Sleep(300);
+    fcloseall();
     const sec duration = clock::now() - before;
 
     printf("It took %.1f s (%.1f FPS)", duration.count(), nFrames / duration.count());
+    gui.Init();
+
     return ret;
 }
 #endif

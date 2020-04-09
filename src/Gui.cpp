@@ -85,6 +85,10 @@ int Gui::Init()
     // Main loop
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
+
+    wchar_t filename[] = L"DDATest_0.h264";
+    ShellExecute(
+        hwnd, L"open", filename, NULL, NULL, SW_SHOWNORMAL);
     while (msg.message != WM_QUIT)
     {
         // Poll and handle messages (inputs, window resize, etc.)

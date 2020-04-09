@@ -15,11 +15,11 @@
             "args": [
                 "nvEnc.sln",
                 // Ask msbuild to generate full paths for file names.
-                // "/property:GenerateFullPaths=true",
+                "/property:GenerateFullPaths=true",
                 "/property:Configuration=Debug",
                 "/property:Platform=x64",
                 "/p:OutDir=${workspaceFolder}/debug/",
-                // "/t:build"
+                "/t:build"
             ],
             "group": {
                 "kind": "build",
