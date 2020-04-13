@@ -23,6 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>nvEncDXGIOutputDuplicationSample</RootNamespace>
     <ProjectName>Capture</ProjectName>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -81,27 +82,6 @@
     <LinkIncremental>false</LinkIncremental>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <!-- <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWS_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>src;src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <EnableModules>true</EnableModules>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
-    </Link>
-  </ItemDefinitionGroup> -->
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>
@@ -111,41 +91,17 @@
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWS_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>src;src/third-party/NvCodec;src/third-party/imgui;src/third-party/imgui/examples</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;nvencodeapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <!-- <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWSNDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>src;src\third-party\NvCodec;C:\git\imgui;C:\git\imgui\examples</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <EnableModules>true</EnableModules>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)/gmock/release_Win32</AdditionalLibraryDirectories>
-    </Link>
-  </ItemDefinitionGroup> -->
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -156,7 +112,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWSNDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>src;src/third-party/NvCodec;src/third-party/imgui;src/third-party/imgui/examples</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -165,11 +121,32 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)/gmock/release_Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;nvencodeapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoder.cpp" />
+    <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.cpp" />
+    <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="src\Capture.cpp" />
     <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\third-party\imgui\examples\imgui_impl_dx11.cpp" />
@@ -181,18 +158,16 @@
     <ClCompile Include="src\DDAImpl.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Preproc.cpp" />
-    <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoder.cpp" />
-    <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Capture.h" />
+    <ClInclude Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoder.h" />
+    <ClInclude Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.h" />
+    <ClInclude Include="Decoder.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="src\DDAImpl.h" />
     <ClInclude Include="src\Defs.h" />
     <ClInclude Include="src\Preproc.h" />
-    <ClInclude Include="src\third-party\NvCodec\NvEncoder\nvEncodeAPI.h" />
-    <ClInclude Include="src\third-party\NvCodec\NvEncoder\NvEncoder.h" />
-    <ClInclude Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

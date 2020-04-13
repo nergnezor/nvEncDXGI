@@ -30,7 +30,6 @@
 #include "DDAImpl.h"
 #include "Preproc.h"
 #include "NvEncoder/NvEncoderD3D11.h"
-// #include "NvDecoder/NvDecoder.h"
 
 class DemoApplication
 {

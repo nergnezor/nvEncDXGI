@@ -33,12 +33,6 @@
     <ClCompile Include="src\Preproc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoder.cpp">
-      <Filter>Source Files\NVEnc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.cpp">
-      <Filter>Source Files\NVEnc</Filter>
-    </ClCompile>
     <ClCompile Include="src\third-party\imgui\examples\imgui_impl_dx11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,6 +57,15 @@
     <ClCompile Include="src\Gui.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Decoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DDAImpl.h">
@@ -74,19 +77,19 @@
     <ClInclude Include="src\Preproc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\third-party\NvCodec\NvEncoder\nvEncodeAPI.h">
-      <Filter>Header Files\NVEnc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\third-party\NvCodec\NvEncoder\NvEncoder.h">
-      <Filter>Header Files\NVEnc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.h">
-      <Filter>Header Files\NVEnc</Filter>
-    </ClInclude>
     <ClInclude Include="Capture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Decoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
