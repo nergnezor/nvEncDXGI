@@ -9,7 +9,7 @@
             "type": "cppvsdbg",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/debug/Capture.exe",
+            "program": "${workspaceFolder}/x64/Debug/Capture.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

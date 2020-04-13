@@ -6,11 +6,11 @@
 #include "Utils/FFmpegDemuxer.h"
 #include "AppDecode/Common/AppDecUtils.h"
 
-simplelogger::Logger* logger = simplelogger::LoggerFactory::CreateConsoleLogger();
+simplelogger::Logger *logger = simplelogger::LoggerFactory::CreateConsoleLogger();
 
-int Decoder::Decode(int argc, char* argv[])
+int Decoder::Decode(char szInFilePath[256])
 {
-    char szInFilePath[256] = "", szOutFilePath[256] = "out.yuv";
+    char szOutFilePath[256] = "out.yuv";
     int iGpu = 0;
     bool bVerbose = false;
     try
@@ -38,7 +38,7 @@ int Decoder::Decode(int argc, char* argv[])
         NvDecoder dec(cuContext, false, FFmpeg2NvCodecId(demuxer.GetVideoCodec()), NULL, true);
 
         int nFrame = 0;
-        uint8_t* pVideo = NULL;
+        uint8_t *pVideo = NULL;
         int nVideoBytes = 0;
         std::ofstream fpOut(szOutFilePath, std::ios::out | std::ios::binary);
         if (!fpOut)
@@ -50,10 +50,11 @@ int Decoder::Decode(int argc, char* argv[])
 
         int n = 0;
         bool bOneInOneOut = true;
-        uint8_t** ppFrame;
-        int64_t* pTimestamp;
+        uint8_t **ppFrame;
+        int64_t *pTimestamp;
         int nFrameReturned = 0;
-        do {
+        do
+        {
             demuxer.Demux(&pVideo, &nVideoBytes);
             // Set flag CUVID_PKT_ENDOFPICTURE to signal that a complete packet has been sent to decode
             dec.Decode(pVideo, nVideoBytes, &ppFrame, &nFrameReturned, CUVID_PKT_ENDOFPICTURE, &pTimestamp, n++);
@@ -76,14 +77,14 @@ int Decoder::Decode(int argc, char* argv[])
                 {
                     std::cout << "Timestamp: " << pTimestamp[i] << std::endl;
                 }
-                fpOut.write(reinterpret_cast<char*>(ppFrame[i]), dec.GetFrameSize());
+                fpOut.write(reinterpret_cast<char *>(ppFrame[i]), dec.GetFrameSize());
             }
         } while (nVideoBytes);
 
         fpOut.close();
         std::cout << "One packet in and one frame out: " << (bOneInOneOut ? "true" : "false") << std::endl;
     }
-    catch (const std::exception& ex)
+    catch (const std::exception &ex)
     {
         std::cout << ex.what();
         exit(1);

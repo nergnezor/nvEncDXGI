@@ -68,7 +68,7 @@
       <!-- <EnableCOMDATFolding>true</EnableCOMDATFolding> -->
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>cuda.lib;avformat.lib;avutil.lib;avcodec.lib;nvcuvid.lib;d3d11.lib;dxgi.lib;nvencodeapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);$(CudaToolkitLibDir);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -91,14 +91,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>cuda.lib;avformat.lib;avutil.lib;avcodec.lib;nvcuvid.lib;d3d11.lib;dxgi.lib;nvencodeapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);$(CudaToolkitLibDir);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvDecoder\NvDecoder.cpp" />
     <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoder.cpp" />
     <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.cpp" />
-    <ClCompile Include="Decoder.cpp" />
+    <ClCompile Include="src\Decoder.cpp" />
     <ClCompile Include="src\Capture.cpp" />
     <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\third-party\imgui\examples\imgui_impl_dx11.cpp" />
@@ -112,7 +112,7 @@
     <ClCompile Include="src\Preproc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Capture.h" />
+    <ClInclude Include="src\Capture.h" />
     <ClInclude Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoder.h" />
     <ClInclude Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.h" />
     <ClInclude Include="Decoder.h" />

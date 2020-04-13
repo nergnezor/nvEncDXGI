@@ -150,11 +150,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 #if 1
 #include <Gui.h>
 #include <Capture.h>
+#include <Decoder.h>
 #include <stdio.h>
 #include <chrono>
 #include <thread>
 // #include <shellapi.h>
 // #include <NvDecoder/NvDecoder.h>
+const char fnameBase[64] = "DDATest_0.h264";
 
 Gui gui;
 int main(int argc, char **argv)
@@ -165,50 +167,6 @@ int main(int argc, char **argv)
     int ret = 0;
     bool useNvenc = true;
 
-/// Parse arguments
-#if 0
-    try
-    {
-        if (argc > 1)
-        {
-            for (int i = 0; i < argc; i++)
-            {
-                if (!strcmpi("-frames", argv[i]))
-                {
-                    nFrames = atoi(argv[i + 1]);
-                }
-                else if (!strcmpi("-frames", argv[i]))
-                {
-                    useNvenc = true;
-                }
-                else if ((!strcmpi("-help", argv[i])) ||
-                         (!strcmpi("-h", argv[i])) ||
-                         (!strcmpi("h", argv[i])) ||
-                         (!strcmpi("help", argv[i])) ||
-                         (!strcmpi("-usage", argv[i])) ||
-                         (!strcmpi("-about", argv[i])) ||
-                         (!strcmpi("-?", argv[i])) ||
-                         (!strcmpi("?", argv[i])) ||
-                         (!strcmpi("about", argv[i])) ||
-                         (!strcmpi("usage", argv[i])))
-                {
-                    printHelp();
-                }
-            }
-        }
-        else
-        {
-            printHelp();
-            return 0;
-        }
-    }
-    catch (...)
-    {
-        printf(" DXGIOUTPUTDuplication_NVENC_Demo: Invalid arguments passed.\n\
-                                                   Continuing to grab 60 frames.\n");
-        printHelp();
-    }
-#endif
     printf(" DXGIOUTPUTDuplication_NVENC_Demo: Frames to Capture: %d.\n", nFrames);
 
     using clock = std::chrono::system_clock;
@@ -220,11 +178,15 @@ int main(int argc, char **argv)
     /// Kick off the demo
     Capture capture;
     ret = capture.Grab60FPS(nFrames);
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     _fcloseall();
+    std::this_thread::sleep_for(std::chrono::milliseconds(300));
     const sec duration = clock::now() - before;
 
     printf("It took %.1f s (%.1f FPS)", duration.count(), nFrames / duration.count());
+
+    Decoder decoder;
+    decoder.Decode("DDATest_0.h264");
+
     gui.Init();
 
     return ret;
