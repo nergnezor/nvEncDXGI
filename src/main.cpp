@@ -220,8 +220,8 @@ int main(int argc, char **argv)
     /// Kick off the demo
     Capture capture;
     ret = capture.Grab60FPS(nFrames);
-    _fcloseall();
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    _fcloseall();
     const sec duration = clock::now() - before;
 
     printf("It took %.1f s (%.1f FPS)", duration.count(), nFrames / duration.count());

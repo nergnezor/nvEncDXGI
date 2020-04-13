@@ -88,18 +88,18 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWS_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\include;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;nvencodeapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cuda.lib;avformat.lib;avutil.lib;avcodec.lib;nvcuvid.lib;d3d11.lib;dxgi.lib;nvencodeapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);$(CudaToolkitLibDir);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -110,9 +110,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_UNICODE;UNICODE;WINDOWSNDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\include;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
@@ -121,29 +121,36 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;nvencodeapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cuda.lib;avformat.lib;avutil.lib;avcodec.lib;nvcuvid.lib;d3d11.lib;dxgi.lib;nvencodeapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);$(CudaToolkitLibDir);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\include;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);$(CudaToolkitLibDir);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cuda.lib;avformat.lib;avutil.lib;avcodec.lib;nvcuvid.lib;d3d11.lib;dxgi.lib;nvencodeapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\include;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(CUDA_PATH)\lib\$(PLATFORM);$(CudaToolkitLibDir);D:\SDKs\Video_Codec_SDK_9.1.23\Lib\$(Platform);D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\lib\$(Platform)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cuda.lib;avformat.lib;avutil.lib;avcodec.lib;nvcuvid.lib;d3d11.lib;dxgi.lib;nvencodeapi.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvDecoder\NvDecoder.cpp" />
     <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoder.cpp" />
     <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.cpp" />
     <ClCompile Include="Decoder.cpp" />

@@ -2,6 +2,6 @@
 class Decoder
 {
 public:
-	int Decode(int argc, char argv[]);
+	int Decode(int argc, char* argv[]);
 };
 

@@ -66,6 +66,9 @@
     <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvEncoder\NvEncoderD3D11.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec\NvDecoder\NvDecoder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DDAImpl.h">
