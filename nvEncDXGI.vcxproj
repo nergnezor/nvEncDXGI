@@ -58,7 +58,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions> -->
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\include;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SDKs\Video_Codec_SDK_9.1.23\Samples;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\External\FFmpeg\include;D:\SDKs\Video_Codec_SDK_9.1.23\Samples\NvCodec;D:\SDKs\Video_Codec_SDK_9.1.23\include;src;src/third-party;src/third-party/imgui;src/third-party/imgui/examples;$(CUDA_PATH)\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <EnableModules>true</EnableModules>
     </ClCompile>
