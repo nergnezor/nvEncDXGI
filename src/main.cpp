@@ -30,15 +30,16 @@
 #include "DDAImpl.h"
 #include "Preproc.h"
 #include "NvEncoder/NvEncoderD3D11.h"
-
+void InitializeMSAA();
+void StartApps();
 class DemoApplication
 {
     /// Demo Application Core class
-#define returnIfError(x)\
-    if (FAILED(x))\
-    {\
-        printf(__FUNCTION__": Line %d, File %s Returning error 0x%08x\n", __LINE__, __FILE__, x);\
-        return x;\
+#define returnIfError(x)                                                                           \
+    if (FAILED(x))                                                                                 \
+    {                                                                                              \
+        printf(__FUNCTION__ ": Line %d, File %s Returning error 0x%08x\n", __LINE__, __FILE__, x); \
+        return x;                                                                                  \
     }
 
 private:
@@ -72,9 +73,10 @@ private:
     /// Encoded video bitstream packet in CPU memory
     std::vector<std::vector<uint8_t>> vPacket;
     /// NVENCODEAPI session intialization parameters
-    NV_ENC_INITIALIZE_PARAMS encInitParams = { 0 };
+    NV_ENC_INITIALIZE_PARAMS encInitParams = {0};
     /// NVENCODEAPI video encoding configuration parameters
-    NV_ENC_CONFIG encConfig = { 0 };
+    NV_ENC_CONFIG encConfig = {0};
+
 private:
     /// Initialize DXGI pipeline
     HRESULT InitDXGI()
@@ -82,29 +84,28 @@ private:
         HRESULT hr = S_OK;
         /// Driver types supported
         D3D_DRIVER_TYPE DriverTypes[] =
-        {
-            D3D_DRIVER_TYPE_HARDWARE,
-            D3D_DRIVER_TYPE_WARP,
-            D3D_DRIVER_TYPE_REFERENCE,
-        };
+            {
+                D3D_DRIVER_TYPE_HARDWARE,
+                D3D_DRIVER_TYPE_WARP,
+                D3D_DRIVER_TYPE_REFERENCE,
+            };
         UINT NumDriverTypes = ARRAYSIZE(DriverTypes);
 
         /// Feature levels supported
         D3D_FEATURE_LEVEL FeatureLevels[] =
-        {
-            D3D_FEATURE_LEVEL_11_0,
-            D3D_FEATURE_LEVEL_10_1,
-            D3D_FEATURE_LEVEL_10_0,
-            D3D_FEATURE_LEVEL_9_1
-        };
+            {
+                D3D_FEATURE_LEVEL_11_0,
+                D3D_FEATURE_LEVEL_10_1,
+                D3D_FEATURE_LEVEL_10_0,
+                D3D_FEATURE_LEVEL_9_1};
         UINT NumFeatureLevels = ARRAYSIZE(FeatureLevels);
         D3D_FEATURE_LEVEL FeatureLevel = D3D_FEATURE_LEVEL_11_0;
 
         /// Create device
         for (UINT DriverTypeIndex = 0; DriverTypeIndex < NumDriverTypes; ++DriverTypeIndex)
         {
-            hr = D3D11CreateDevice(nullptr, DriverTypes[DriverTypeIndex], nullptr, /*D3D11_CREATE_DEVICE_DEBUG*/0, FeatureLevels, NumFeatureLevels,
-                D3D11_SDK_VERSION, &pD3DDev, &FeatureLevel, &pCtx);
+            hr = D3D11CreateDevice(nullptr, DriverTypes[DriverTypeIndex], nullptr, /*D3D11_CREATE_DEVICE_DEBUG*/ 0, FeatureLevels, NumFeatureLevels,
+                                   D3D11_SDK_VERSION, &pD3DDev, &FeatureLevel, &pCtx);
             if (SUCCEEDED(hr))
             {
                 // Device creation succeeded, no need to loop anymore
@@ -132,7 +133,7 @@ private:
     {
         if (!pEnc)
         {
-            DWORD w = bNoVPBlt ? pDDAWrapper->getWidth() : encWidth; 
+            DWORD w = bNoVPBlt ? pDDAWrapper->getWidth() : encWidth;
             DWORD h = bNoVPBlt ? pDDAWrapper->getHeight() : encHeight;
             NV_ENC_BUFFER_FORMAT fmt = bNoVPBlt ? NV_ENC_BUFFER_FORMAT_ARGB : NV_ENC_BUFFER_FORMAT_NV12;
             pEnc = new NvEncoderD3D11(pD3DDev, w, h, fmt);
@@ -180,7 +181,7 @@ private:
     {
         if (!fp)
         {
-            char fname[64] = { 0 };
+            char fname[64] = {0};
             sprintf_s(fname, (const char *)fnameBase, failCount);
             errno_t err = fopen_s(&fp, fname, "wb");
             returnIfError(err);
@@ -210,7 +211,6 @@ public:
 
         hr = InitDup();
         returnIfError(hr);
-
 
         hr = InitEnc();
         returnIfError(hr);
@@ -251,7 +251,7 @@ public:
         SAFE_RELEASE(pDupTex2D);
         returnIfError(hr);
 
-        pEncBuf->AddRef();  // Release after encode
+        pEncBuf->AddRef(); // Release after encode
         return hr;
     }
 
@@ -324,7 +324,7 @@ public:
     DemoApplication() {}
     ~DemoApplication()
     {
-        Cleanup(true); 
+        Cleanup(true);
     }
 };
 
@@ -335,19 +335,19 @@ int Grab60FPS(int nFrames)
     DemoApplication Demo;
     HRESULT hr = S_OK;
     int capturedFrames = 0;
-    LARGE_INTEGER start = { 0 };
-    LARGE_INTEGER end = { 0 };
-    LARGE_INTEGER interval = { 0 };
-    LARGE_INTEGER freq = { 0 };
+    LARGE_INTEGER start = {0};
+    LARGE_INTEGER end = {0};
+    LARGE_INTEGER interval = {0};
+    LARGE_INTEGER freq = {0};
     int wait = WAIT_BASE;
 
     QueryPerformanceFrequency(&freq);
 
     /// Reset waiting time for the next screen capture attempt
-#define RESET_WAIT_TIME(start, end, interval, freq)         \
-    QueryPerformanceCounter(&end);                          \
-    interval.QuadPart = end.QuadPart - start.QuadPart;      \
-    MICROSEC_TIME(interval, freq);                          \
+#define RESET_WAIT_TIME(start, end, interval, freq)    \
+    QueryPerformanceCounter(&end);                     \
+    interval.QuadPart = end.QuadPart - start.QuadPart; \
+    MICROSEC_TIME(interval, freq);                     \
     wait = (int)(WAIT_BASE - (interval.QuadPart * 1000));
 
     /// Initialize Demo app
@@ -361,12 +361,12 @@ int Grab60FPS(int nFrames)
     /// Run capture loop
     do
     {
-        /// get start timestamp. 
+        /// get start timestamp.
         /// use this to adjust the waiting period in each capture attempt to approximately attempt 60 captures in a second
         QueryPerformanceCounter(&start);
         /// Get a frame from DDA
         hr = Demo.Capture(wait);
-        if (hr == DXGI_ERROR_WAIT_TIMEOUT) 
+        if (hr == DXGI_ERROR_WAIT_TIMEOUT)
         {
             /// retry if there was no new update to the screen during our specific timeout interval
             /// reset our waiting time
@@ -394,7 +394,7 @@ int Grab60FPS(int nFrames)
             }
             RESET_WAIT_TIME(start, end, interval, freq);
             /// Preprocess for encoding
-            hr = Demo.Preproc(); 
+            hr = Demo.Preproc();
             if (FAILED(hr))
             {
                 printf("Preproc failed with error 0x%08x\n", hr);
@@ -424,14 +424,12 @@ void printHelp()
     printf(" DXGIOUTPUTDuplication_NVENC_Demo: '-frames <n>': n = No. of frames to capture");
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     /// The app will try to capture 60 times, by default
     int nFrames = 60;
     int ret = 0;
     bool useNvenc = true;
-
-
 
     /// Parse arguments
     try
@@ -457,8 +455,7 @@ int main(int argc, char** argv)
                          (!strcmpi("-?", argv[i])) ||
                          (!strcmpi("?", argv[i])) ||
                          (!strcmpi("about", argv[i])) ||
-                         (!strcmpi("usage", argv[i]))
-                        )
+                         (!strcmpi("usage", argv[i])))
                 {
                     printHelp();
                 }
@@ -478,7 +475,6 @@ int main(int argc, char** argv)
     }
     printf(" DXGIOUTPUTDuplication_NVENC_Demo: Frames to Capture: %d.\n", nFrames);
 
-
     using clock = std::chrono::system_clock;
     using sec = std::chrono::duration<double>;
     // for milliseconds, use using ms = std::chrono::duration<double, std::milli>;
@@ -486,10 +482,143 @@ int main(int argc, char** argv)
     const auto before = clock::now();
 
     /// Kick off the demo
-    ret = Grab60FPS(nFrames);
-
+    //ret = Grab60FPS(nFrames);
+    //InitializeMSAA();
     const sec duration = clock::now() - before;
 
-    printf("It took %d s (%%.1f FPS)", duration.count() ,nFrames / duration.count());
+    printf("It took %.1f s (%.1f FPS)", duration.count(), nFrames / duration.count());
     return ret;
+}
+
+#pragma region Move window
+#include <oleacc.h>
+// Global variable.
+HWINEVENTHOOK g_hook;
+
+// Callback function that handles events.
+//
+void CALLBACK HandleWinEvent(HWINEVENTHOOK hook, DWORD event, HWND hwnd,
+                             LONG idObject, LONG idChild, DWORD dwEventThread,
+                             DWORD dwmsEventTime)
+{
+    IAccessible *pAcc = NULL;
+    VARIANT varChild;
+    HRESULT hr =
+        AccessibleObjectFromEvent(hwnd, idObject, idChild, &pAcc, &varChild);
+    if ((hr == S_OK) && (pAcc != NULL))
+    {
+        BSTR bstrName;
+        pAcc->get_accName(varChild, &bstrName);
+        if (event == EVENT_SYSTEM_MENUSTART)
+        {
+            printf("Begin: ");
+        }
+        else if (event == EVENT_SYSTEM_MENUEND)
+        {
+            printf("End:   ");
+        }
+        else if (event == EVENT_SYSTEM_FOREGROUND)
+        {
+            printf("EVENT_SYSTEM_FOREGROUND:   ");
+            // SetWindowPos(hwnd, NULL, 0, 0, 400, 400, NULL);
+        }
+        printf("%S\n", bstrName);
+        SysFreeString(bstrName);
+        pAcc->Release();
+    }
+}
+// Initializes COM and sets up the event hook.
+//
+void InitializeMSAA()
+{
+    CoInitialize(NULL);
+    g_hook = SetWinEventHook(
+        EVENT_SYSTEM_FOREGROUND,
+        EVENT_SYSTEM_MENUEND,                             // Range of events (4 to 5).
+        NULL,                                             // Handle to DLL.
+        HandleWinEvent,                                   // The callback.
+        0, 0,                                             // Process and thread IDs of interest (0 = all)
+        WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS); // Flags.
+}
+
+// Unhooks the event and shuts down COM.
+//
+void ShutdownMSAA()
+{
+    UnhookWinEvent(g_hook);
+    CoUninitialize();
+}
+struct ProcessWindowsInfo
+{
+    DWORD ProcessID;
+    std::vector<HWND> Windows;
+
+    ProcessWindowsInfo(DWORD const AProcessID) : ProcessID(AProcessID) {}
+};
+
+BOOL __stdcall EnumProcessWindowsProc(HWND hwnd, LPARAM lParam)
+{
+    ProcessWindowsInfo *Info = reinterpret_cast<ProcessWindowsInfo *>(lParam);
+    DWORD WindowProcessID;
+
+    GetWindowThreadProcessId(hwnd, &WindowProcessID);
+
+    if (WindowProcessID == Info->ProcessID)
+        Info->Windows.push_back(hwnd);
+
+    return true;
+}
+BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
+{
+    char buffer[128];
+    int written = GetWindowTextA(hwnd, buffer, 128);
+    printf("%s\n", buffer);
+    if (written && strstr(buffer, "Instagram") != NULL)
+    {
+        *(HWND *)lParam = hwnd;
+        return FALSE;
+    }
+    return TRUE;
+}
+
+HWND GetFirefoxHwnd()
+{
+    HWND hWnd = NULL;
+
+    EnumWindows(EnumWindowsProc, (LPARAM)&hWnd);
+    return hWnd;
+}
+void StartApps()
+{
+    wchar_t filename[] = L"DDATest_0.h264";
+    //ShellExecuteW(NULL, L"open", filename, NULL, NULL, SW_SHOWNORMAL);
+    // ShellExecuteA(0, 0, "chrome.exe", "http://google.com  --incognito", 0, SW_SHOWMAXIMIZED);
+    ShellExecuteA(0, 0, "chrome.exe", "--app=http://m.facebook.com", 0, SW_SHOWNORMAL);
+    ShellExecuteA(0, 0, "chrome.exe", "--app=http://m.instagram.com", 0, SW_SHOWNORMAL);
+
+    // ShellExecuteW(NULL, NULL, L"http://m.facebook.com", NULL, NULL,
+    //               SW_SHOWNORMAL);
+    // HWND hwnd = ::FindWindowW(_T("Microsoft Edge"), NULL);
+    // HWND hwnd = ::FindWindow(0, _T("Microsoft Edge"));
+    // SHELLEXECUTEINFO sei = { 0 };
+    // sei.cbSize = sizeof(SHELLEXECUTEINFO);
+    // sei.fMask = SEE_MASK_NOCLOSEPROCESS;
+    // sei.hwnd = 0;  // This app's window handle sei.lpVerb = _T("open");
+    // sei.lpFile = L"http://m.facebook.com";
+    // sei.lpDirectory = NULL;
+    // sei.nShow = SW_SHOW;
+    // sei.hInstApp = NULL;
+    // if (ShellExecuteEx(&sei)) {
+    // 	WaitForInputIdle(sei.hProcess, INFINITE);
+
+    // 	ProcessWindowsInfo Info(GetProcessId(sei.hProcess));
+
+    // 	EnumWindows((WNDENUMPROC)EnumProcessWindowsProc,
+    // 		reinterpret_cast<LPARAM>(&Info));
+    // 	for (const auto& hwnd : Info.Windows)
+    // 		SetWindowPos(hwnd, NULL, 0, 0, 200, 200, NULL);
+    // }
+    HWND hwnd = GetFirefoxHwnd();
+    if (hwnd)
+        SetWindowPos(hwnd, NULL, 400, 0, 400, 800, NULL);
 }
