@@ -36,6 +36,9 @@
     <ClCompile Include="src\third-party\NvCodec\NvEncoder\NvEncoderD3D11.cpp">
       <Filter>Source Files\NVEnc</Filter>
     </ClCompile>
+    <ClCompile Include="src\Capture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DDAImpl.h">
