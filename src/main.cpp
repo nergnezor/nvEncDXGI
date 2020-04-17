@@ -2,10 +2,10 @@
 
 #pragma region WindowsAPI
 #if 0
-#include <windows.h>
 #include <stdlib.h>
 #include <string.h>
 #include <tchar.h>
+#include <windows.h>
 
 // Global variables
 
@@ -148,11 +148,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 #pragma region Capture
 #if 1
-#include <Gui.h>
 #include <Capture.h>
 #include <Decoder.h>
-#include <stdio.h>
+#include <Gui.h>
 #include <chrono>
+#include <stdio.h>
 #include <thread>
 // #include <shellapi.h>
 // #include <NvDecoder/NvDecoder.h>
@@ -162,34 +162,36 @@ Gui gui;
 int main(int argc, char **argv)
 // void Capture()
 {
-    /// The app will try to capture 60 times, by default
-    int nFrames = 60;
-    int ret = 0;
-    bool useNvenc = true;
+  /// The app will try to capture 60 times, by default
+  int nFrames = 60;
+  int ret = 0;
+  bool useNvenc = true;
 
-    printf(" DXGIOUTPUTDuplication_NVENC_Demo: Frames to Capture: %d.\n", nFrames);
+  printf(" DXGIOUTPUTDuplication_NVENC_Demo: Frames to Capture: %d.\n",
+         nFrames);
 
-    using clock = std::chrono::system_clock;
-    using sec = std::chrono::duration<double>;
-    // for milliseconds, use using ms = std::chrono::duration<double, std::milli>;
+  using clock = std::chrono::system_clock;
+  using sec = std::chrono::duration<double>;
+  // for milliseconds, use using ms = std::chrono::duration<double, std::milli>;
 
-    const auto before = clock::now();
+  const auto before = clock::now();
 
-    /// Kick off the demo
-    Capture capture;
-    // ret = capture.Grab60FPS(nFrames);
-    _fcloseall();
-    std::this_thread::sleep_for(std::chrono::milliseconds(300));
-    const sec duration = clock::now() - before;
+  /// Kick off the demo
+  Capture capture;
+  // ret = capture.Grab60FPS(nFrames);
+  _fcloseall();
+  std::this_thread::sleep_for(std::chrono::milliseconds(300));
+  const sec duration = clock::now() - before;
 
-    printf("It took %.1f s (%.1f FPS)", duration.count(), nFrames / duration.count());
+  printf("It took %.1f s (%.1f FPS)", duration.count(),
+         nFrames / duration.count());
 
-    Decoder decoder;
-    decoder.Decode("DDATest_0.h264");
+  Decoder decoder;
+  // decoder.Decode("DDATest_0.h264");
 
-    gui.Init();
+  gui.Init();
 
-    return ret;
+  return ret;
 }
 #endif
 #pragma endregion
