@@ -6,9 +6,6 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
   build:
@@ -28,4 +25,4 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: ${{ matrix.config }}
-          path: x64\${{ matrix.config }}\nvEncDXGI.exe
+          path: x64\${{ matrix.config }}\Capture.exe
