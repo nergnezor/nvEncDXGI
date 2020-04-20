@@ -66,7 +66,7 @@ private:
     const static UINT encWidth = 1920;
     const static UINT encHeight = 1080;
     /// turn off preproc, let NVENCODE API handle colorspace conversion
-    const static bool bNoVPBlt = false;
+    const static bool bNoVPBlt = true;
     /// Video output file name
     const char fnameBase[64] = "DDATest_%d.h264";
     /// Encoded video bitstream packet in CPU memory
@@ -410,15 +410,4 @@ int Capture::Grab60FPS(int nFrames)
     } while (capturedFrames <= nFrames);
 
     return 0;
-}
-
-void printHelp()
-{
-    printf(" DXGIOUTPUTDuplication_NVENC_Demo: This application demonstrates using DDA (a.k.a. DesktopDuplication or OutputDuplication or IDXGIOutputDuplication API\n\
-                                               to capture desktop and efficiently encode the captured images using NVENCODEAPI.\n\
-                                               The output video bitstream will be generated with name DDATest_0.h264 in current working directory.\n\
-                                               This application only captures the primary desktop.\n");
-    printf(" DXGIOUTPUTDuplication_NVENC_Demo: Commandline help\n");
-    printf(" DXGIOUTPUTDuplication_NVENC_Demo: '-?', '?', '-about', 'about', '-h', '-help', '-usage', 'h', 'help', 'usage': Print this Commandline help\n");
-    printf(" DXGIOUTPUTDuplication_NVENC_Demo: '-frames <n>': n = No. of frames to capture");
 }

@@ -5,8 +5,25 @@
 // Global variable.
 HWINEVENTHOOK g_hook;
 int counter;
-// Callback function that handles events.
+RECT rect;
+int appCount;
+char *apps[] = {"--app=http://m.facebook.com", "--app=http://m.instagram.com"};
+
+void StartNextApp()
+{
+    wchar_t filename[] = L"DDATest_0.h264";
+    //ShellExecuteW(NULL, L"open", filename, NULL, NULL, SW_SHOWNORMAL);
+    ShellExecuteA(0, 0, "chrome.exe", apps[appCount], 0, SW_SHOWNORMAL);
+}
+
+// Unhooks the event and shuts down COM.
 //
+void ShutdownMSAA()
+{
+    UnhookWinEvent(g_hook);
+    CoUninitialize();
+}
+
 void CALLBACK HandleWinEvent(HWINEVENTHOOK hook, DWORD event, HWND hwnd,
                              LONG idObject, LONG idChild, DWORD dwEventThread,
                              DWORD dwmsEventTime)
@@ -30,9 +47,17 @@ void CALLBACK HandleWinEvent(HWINEVENTHOOK hook, DWORD event, HWND hwnd,
         else if (event == EVENT_SYSTEM_FOREGROUND)
         {
             printf("EVENT_SYSTEM_FOREGROUND:   ");
-            if (wcsstr(bstrName, L"Facebook") != NULL)
-                printf("Facebook!!");
-            // SetWindowPos(hwnd, NULL, 400 * counter++, 0, 400, 400, NULL);
+            int nApps = sizeof(apps) / sizeof(*apps);
+            int width = (rect.right - rect.left) / nApps;
+            int height = rect.bottom - rect.top;
+            int xPos = rect.left + appCount * width;
+            SetWindowPos(hwnd, NULL, xPos, 0, width, height, NULL);
+            ++appCount;
+
+            if (appCount == nApps)
+                ShutdownMSAA();
+            else
+                StartNextApp();
         }
         printf("%S\n", bstrName);
         SysFreeString(bstrName);
@@ -41,8 +66,10 @@ void CALLBACK HandleWinEvent(HWINEVENTHOOK hook, DWORD event, HWND hwnd,
 }
 // Initializes COM and sets up the event hook.
 //
-void AppStarter::InitializeMSAA()
+void AppStarter::InitializeMSAA(RECT *lprect)
 {
+    rect = *lprect;
+
     CoInitialize(NULL);
     g_hook = SetWinEventHook(
         EVENT_SYSTEM_FOREGROUND,
@@ -53,13 +80,6 @@ void AppStarter::InitializeMSAA()
         WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS); // Flags.
 }
 
-// Unhooks the event and shuts down COM.
-//
-void ShutdownMSAA()
-{
-    UnhookWinEvent(g_hook);
-    CoUninitialize();
-}
 struct ProcessWindowsInfo
 {
     DWORD ProcessID;
@@ -100,10 +120,8 @@ HWND GetFirefoxHwnd()
     EnumWindows(EnumWindowsProc, (LPARAM)&hWnd);
     return hWnd;
 }
+
 void AppStarter::StartApps()
 {
-    wchar_t filename[] = L"DDATest_0.h264";
-    //ShellExecuteW(NULL, L"open", filename, NULL, NULL, SW_SHOWNORMAL);
-    ShellExecuteA(0, 0, "chrome.exe", "--app=http://m.facebook.com", 0, SW_SHOWNORMAL);
-    ShellExecuteA(0, 0, "chrome.exe", "--app=http://m.instagram.com", 0, SW_SHOWNORMAL);
+    StartNextApp();
 }

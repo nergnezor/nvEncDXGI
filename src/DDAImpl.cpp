@@ -34,40 +34,40 @@ using namespace std;
 /// Initialize DDA
 HRESULT DDAImpl::Init()
 {
-    IDXGIOutput * pOutput = nullptr;
-    IDXGIDevice2* pDevice = nullptr;
-    IDXGIFactory1* pFactory = nullptr;
+    IDXGIOutput *pOutput = nullptr;
+    IDXGIDevice2 *pDevice = nullptr;
+    IDXGIFactory1 *pFactory = nullptr;
     IDXGIAdapter *pAdapter = nullptr;
-    IDXGIOutput1* pOut1 = nullptr;
+    IDXGIOutput1 *pOut1 = nullptr;
 
     /// Release all temporary refs before exit
-#define CLEAN_RETURN(x) \
-    SAFE_RELEASE(pDevice);\
-    SAFE_RELEASE(pFactory);\
-    SAFE_RELEASE(pOutput);\
-    SAFE_RELEASE(pOut1);\
-    SAFE_RELEASE(pAdapter);\
+#define CLEAN_RETURN(x)     \
+    SAFE_RELEASE(pDevice);  \
+    SAFE_RELEASE(pFactory); \
+    SAFE_RELEASE(pOutput);  \
+    SAFE_RELEASE(pOut1);    \
+    SAFE_RELEASE(pAdapter); \
     return x;
 
     HRESULT hr = S_OK;
     /// To create a DDA object given a D3D11 device, we must first get to the DXGI Adapter associated with that device
-    if (FAILED(hr = pD3DDev->QueryInterface(__uuidof(IDXGIDevice2), (void**)&pDevice)))
+    if (FAILED(hr = pD3DDev->QueryInterface(__uuidof(IDXGIDevice2), (void **)&pDevice)))
     {
         CLEAN_RETURN(hr);
     }
 
-    if (FAILED(hr = pDevice->GetParent(__uuidof(IDXGIAdapter), (void**)&pAdapter)))
+    if (FAILED(hr = pDevice->GetParent(__uuidof(IDXGIAdapter), (void **)&pAdapter)))
     {
         CLEAN_RETURN(hr);
     }
     /// Once we have the DXGI Adapter, we enumerate the attached display outputs, and select which one we want to capture
     /// This sample application always captures the primary display output, enumerated at index 0.
-    if (FAILED(hr = pAdapter->EnumOutputs(0, &pOutput)))
+    if (FAILED(hr = pAdapter->EnumOutputs(1, &pOutput)))
     {
         CLEAN_RETURN(hr);
     }
 
-    if (FAILED(hr = pOutput->QueryInterface(__uuidof(IDXGIOutput1), (void**)&pOut1)))
+    if (FAILED(hr = pOutput->QueryInterface(__uuidof(IDXGIOutput1), (void **)&pOut1)))
     {
         CLEAN_RETURN(hr);
     }
@@ -94,9 +94,12 @@ HRESULT DDAImpl::GetCapturedFrame(ID3D11Texture2D **ppTex2D, int wait)
     DXGI_OUTDUPL_FRAME_INFO frameInfo;
     ZeroMemory(&frameInfo, sizeof(frameInfo));
     int acquired = 0;
-    
 
-#define RETURN_ERR(x) {printf(__FUNCTION__": %d : Line %d return 0x%x\n", frameno, __LINE__, x);return x;}
+#define RETURN_ERR(x)                                                              \
+    {                                                                              \
+        printf(__FUNCTION__ ": %d : Line %d return 0x%x\n", frameno, __LINE__, x); \
+        return x;                                                                  \
+    }
 
     if (pResource)
     {
@@ -110,15 +113,15 @@ HRESULT DDAImpl::GetCapturedFrame(ID3D11Texture2D **ppTex2D, int wait)
     {
         if (hr == DXGI_ERROR_WAIT_TIMEOUT)
         {
-            printf(__FUNCTION__": %d : Wait for %d ms timed out\n", frameno, wait);
+            printf(__FUNCTION__ ": %d : Wait for %d ms timed out\n", frameno, wait);
         }
         if (hr == DXGI_ERROR_INVALID_CALL)
         {
-            printf(__FUNCTION__": %d : Invalid Call, previous frame not released?\n", frameno);
+            printf(__FUNCTION__ ": %d : Invalid Call, previous frame not released?\n", frameno);
         }
         if (hr == DXGI_ERROR_ACCESS_LOST)
         {
-            printf(__FUNCTION__": %d : Access lost, frame needs to be released?\n", frameno);
+            printf(__FUNCTION__ ": %d : Access lost, frame needs to be released?\n", frameno);
         }
         RETURN_ERR(hr);
     }
@@ -131,20 +134,21 @@ HRESULT DDAImpl::GetCapturedFrame(ID3D11Texture2D **ppTex2D, int wait)
 
     if (!pResource)
     {
-        printf(__FUNCTION__": %d : Null output resource. Return error.\n", frameno);
+        printf(__FUNCTION__ ": %d : Null output resource. Return error.\n", frameno);
         return E_UNEXPECTED;
     }
 
-    if (FAILED(hr = pResource->QueryInterface(__uuidof(ID3D11Texture2D), (void**)ppTex2D)))
+    if (FAILED(hr = pResource->QueryInterface(__uuidof(ID3D11Texture2D), (void **)ppTex2D)))
     {
         return hr;
     }
 
-    LARGE_INTEGER pts = frameInfo.LastPresentTime;  MICROSEC_TIME(pts, qpcFreq);
+    LARGE_INTEGER pts = frameInfo.LastPresentTime;
+    MICROSEC_TIME(pts, qpcFreq);
     LONGLONG interval = pts.QuadPart - lastPTS.QuadPart;
 
-    printf(__FUNCTION__": %d : Accumulated Frames %u PTS Interval %lld PTS %lld\n", frameno, frameInfo.AccumulatedFrames,  interval * 1000, frameInfo.LastPresentTime.QuadPart);
-    ofs << "frameNo: " << frameno << " | Accumulated: "<< frameInfo.AccumulatedFrames <<" | PTS: " << frameInfo.LastPresentTime.QuadPart << " | PTSInterval: "<< (interval)*1000<<endl;
+    printf(__FUNCTION__ ": %d : Accumulated Frames %u PTS Interval %lld PTS %lld\n", frameno, frameInfo.AccumulatedFrames, interval * 1000, frameInfo.LastPresentTime.QuadPart);
+    ofs << "frameNo: " << frameno << " | Accumulated: " << frameInfo.AccumulatedFrames << " | PTS: " << frameInfo.LastPresentTime.QuadPart << " | PTSInterval: " << (interval)*1000 << endl;
     lastPTS = pts; // store microsec value
     frameno += frameInfo.AccumulatedFrames;
     return hr;
