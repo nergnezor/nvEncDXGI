@@ -2,5 +2,5 @@
 class Capture
 {
 public:
-    int Grab60FPS(int nFrames);
+    void CaptureAndEncode();
 };

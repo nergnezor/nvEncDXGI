@@ -3,29 +3,7 @@
 #include "Capture.h"
 #include "AppStarter.h"
 
-Capture capture;
 AppStarter appStarter;
-
-void CaptureAndEncode()
-{
-    /// The app will try to capture 60 times, by default
-    int nFrames = 60;
-    int ret = 0;
-    bool useNvenc = true;
-
-    using clock = std::chrono::system_clock;
-    using sec = std::chrono::duration<double>;
-    // for milliseconds, use using ms = std::chrono::duration<double, std::milli>;
-
-    const auto before = clock::now();
-    setvbuf(stdout, NULL, _IONBF, 0); // disable output buffer
-
-    /// Kick off the demo
-    ret = capture.Grab60FPS(nFrames);
-    const sec duration = clock::now() - before;
-
-    printf("It took %.1f s (%.1f FPS)", duration.count(), nFrames / duration.count());
-}
 
 int monitorCount;
 BOOL Monitorenumproc(
@@ -40,7 +18,6 @@ BOOL Monitorenumproc(
     {
         appStarter.InitializeMSAA(rect);
         appStarter.StartApps();
-        CaptureAndEncode();
         return false;
     }
     return true;

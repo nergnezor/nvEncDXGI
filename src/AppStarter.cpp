@@ -1,6 +1,9 @@
 #include "AppStarter.h"
 #include <oleacc.h>
 #include <vector>
+#include "Capture.h"
+
+Capture capture;
 
 // Global variable.
 HWINEVENTHOOK g_hook;
@@ -55,7 +58,10 @@ void CALLBACK HandleWinEvent(HWINEVENTHOOK hook, DWORD event, HWND hwnd,
             ++appCount;
 
             if (appCount == nApps)
+            {
                 ShutdownMSAA();
+                capture.CaptureAndEncode();
+            }
             else
                 StartNextApp();
         }

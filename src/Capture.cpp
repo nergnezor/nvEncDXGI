@@ -328,9 +328,10 @@ public:
 };
 
 /// Demo 60 FPS (approx.) capture
-int Capture::Grab60FPS(int nFrames)
+int Grab60FPS(int nSeconds)
 {
-    const int WAIT_BASE = 17;
+    // const int WAIT_BASE = 17;
+    const int WAIT_BASE = 10;
     DemoApplication Demo;
     HRESULT hr = S_OK;
     int capturedFrames = 0;
@@ -357,6 +358,10 @@ int Capture::Grab60FPS(int nFrames)
         return -1;
     }
 
+    using clock = std::chrono::system_clock;
+    using sec = std::chrono::duration<double>;
+
+    const auto before = clock::now();
     /// Run capture loop
     do
     {
@@ -407,7 +412,20 @@ int Capture::Grab60FPS(int nFrames)
             }
             capturedFrames++;
         }
-    } while (capturedFrames <= nFrames);
+    } while (clock::now() - before < std::chrono::seconds(nSeconds));
 
-    return 0;
+    return capturedFrames;
+}
+
+void Capture::CaptureAndEncode()
+{
+    /// The app will try to capture 60 times, by default
+    int nSeconds = 10;
+
+    setvbuf(stdout, NULL, _IONBF, 0); // disable output buffer
+
+    /// Kick off the demo
+    int nFrames = Grab60FPS(nSeconds);
+
+    printf("Recorded %d frames in %d seconds", nFrames, nSeconds);
 }
